@@ -19,7 +19,10 @@ const login = (req, res) => {
 
       res.status(200).json({
         status: true,
-        user: result[0].id.toString(),
+        user: {
+          userId: result[0].id,
+          name: result[0].full_name,
+        },
         message: 'Login Success',
       });
     }
