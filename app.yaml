@@ -1,7 +1,7 @@
 runtime: nodejs16
 
 env_variables:
-DB_HOST = 34.70.200.26
-DB_USER = root
-DB_PASSWORD = tripazaproject2022
-DB_DATABASE = tripaza
+  DB_HOST: '34.70.200.26'
+  DB_USER: 'root'
+  DB_PASSWORD: 'tripazaproject2022'
+  DB_DATABASE: 'tripaza'
