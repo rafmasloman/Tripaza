@@ -4,5 +4,5 @@ CREATE TABLE users (
     password VARCHAR(50) NOT NULL,
     full_name VARCHAR(200) NOT NULL,
     birth_date DATE NOT NULL,
-    phone_number VARCHAR(15) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL
 )

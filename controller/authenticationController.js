@@ -47,12 +47,10 @@ const register = (req, res) => {
   }
 
   const id = uuid.v1();
-
   db.query(
     {
-      sql: `INSERT INTO users (id,email,password, full_name, birth_date, phone_number) VALUES (?, ?,?,?,?, ?)`,
+      sql: `INSERT INTO users (email,password, full_name, birth_date, phone_number) VALUES ( ?,?,?,?, ?)`,
       values: [
-        id,
         req.body.email,
         req.body.password,
         req.body.full_name,
