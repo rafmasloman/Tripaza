@@ -13,7 +13,7 @@ app.use(express.json());
 // app.post('/register', registerValidation, register);
 app.use('/', authenticationRoute);
 
-const port = 3000;
+const port = 8080;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
