@@ -5,3 +5,4 @@ env_variables:
   DB_USER: 'root'
   DB_PASSWORD: 'tripazaproject2022'
   DB_DATABASE: 'tripaza'
+  TOKEN_SECRET: 'b83083266e6fbf289ce5cd94323250c52faa37f1ce50b8e19c1fcb67f5d1127f22259'

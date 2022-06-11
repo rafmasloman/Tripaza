@@ -6,3 +6,18 @@ CREATE TABLE users (
     birth_date DATE NOT NULL,
     phone_number VARCHAR(15) NOT NULL
 )
+
+CREATE TABLE foods ( 
+    id INT PRIMARY KEY, 
+    restaurant_name VARCHAR(50), 
+    restaurant_address VARCHAR(200),
+    food_name VARCHAR(50)
+) 
+
+CREATE TABLE ratings ( 
+    rating decimal(5.0) DEFAULT 0.0, 
+    foodId int NOT NULL, 
+    userId int NOT NULL, 
+    FOREIGN KEY(foodid) REFERENCES foods(id) ON DELETE CASCADE, 
+    FOREIGN KEY(userId) REFERENCE users(id) ON DELETE CASCADE
+);
