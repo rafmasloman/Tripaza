@@ -10,10 +10,10 @@ const login = async (req, res) => {
     let password = req.body.password;
     const user = await dbQuery.getUserByEmail(email);
     console.log(user);
-    const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
-      // expiresIn: 86400,
-      expiresIn: '20s',
-    });
+    // const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+    //   // expiresIn: 86400,
+    //   expiresIn: '20s',
+    // });
 
     const isPasswordTrue = bcrypt.compareSync(password, user.password);
     // if (!user) {
@@ -33,7 +33,7 @@ const login = async (req, res) => {
     return res.json({
       status: true,
       message: 'Login Success',
-      token: token,
+      id: user.id,
     });
 
     // res.redirect('/user');
@@ -74,29 +74,36 @@ const registerValidation = [
 ];
 
 const register = async (req, res) => {
-  const errors = validationResult(req);
+  try {
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { full_name, birth_date, phone_number, email, password } = req.body;
+
+    const id = uuid.v1();
+    const salt = 10;
+    const hashPassword = bcrypt.hashSync(password, salt);
+    const user = await dbQuery.insertUser(
+      full_name,
+      birth_date,
+      phone_number,
+      email,
+      hashPassword
+    );
+
+    res.json({
+      status: 'success',
+      message: 'register success',
+    });
+  } catch (error) {
+    res.json({
+      status: 'false',
+      message: error.sqlMessage,
+    });
   }
-
-  const { full_name, birth_date, phone_number, email, password } = req.body;
-
-  const id = uuid.v1();
-  const salt = 10;
-  const hashPassword = bcrypt.hashSync(password, salt);
-  const user = await dbQuery.insertUser(
-    full_name,
-    birth_date,
-    phone_number,
-    email,
-    hashPassword
-  );
-
-  res.json({
-    status: 'success',
-    message: 'register success',
-  });
   // .then((data) =>
   //   res.json({
   //     message: 'register succes',

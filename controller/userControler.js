@@ -1,58 +1,67 @@
 const { dbQuery } = require('../models/dbConnection');
 const { jwt, bcrypt } = require('./authenticationController');
+const { body, validationResult, check } = require('express-validator');
 
 const user = async (req, res) => {
-  const token = req.body.token;
-  const id = jwt.verify(token, process.env.TOKEN_SECRET, (err, decode) => {
-    if (err) {
-      return res.json({
-        status: false,
-        message: 'You has been logout',
+  try {
+    const user = await dbQuery.getUserData(req.body.id);
+    if (user) {
+      res.json({
+        status: true,
+        data: {
+          id: user[0].id,
+          full_name: user[0].full_name,
+          email: user[0].email,
+          birthday: user[0].birth_date,
+          phone_number: user[0].phone_number,
+        },
       });
     }
-    return decode.id;
-  });
-
-  console.log(id);
-  const user = await dbQuery.getUserData(id);
-  res.json({
-    status: true,
-    data: {
-      id: id,
-      full_name: user[0].full_name,
-      email: user[0].email,
-      birthday: user[0].birt_date,
-      phone_number: user[0].phone_number,
-    },
-  });
+  } catch (error) {
+    res.json({
+      status: false,
+      message: 'Cannot find user',
+    });
+  }
 };
 
 const editProfile = async (req, res) => {
-  const token = req.body.token;
-  const salt = 10;
-  const { full_name, birth_date, phone_number, email, password } = req.body;
-  const { id } = jwt.verify(token, process.env.TOKEN_SECRET);
+  try {
+    const token = req.body.token;
+    const salt = 10;
+    const { full_name, birth_date, phone_number, email, password, id } =
+      req.body;
+    // const { id } = jwt.verify(token, process.env.TOKEN_SECRET);
 
-  const hashPassword = bcrypt.hashSync(password, salt);
+    const hashPassword = bcrypt.hashSync(password, salt);
 
-  const userProfile = await dbQuery.updateData(
-    full_name,
-    birth_date,
-    phone_number,
-    email,
-    hashPassword,
-    id
-  );
-  res.json({
-    message: 'Success update data',
-    user: userProfile,
-  });
+    const userProfile = await dbQuery.updateData(
+      full_name,
+      birth_date,
+      phone_number,
+      email,
+      hashPassword,
+      id
+    );
+
+    res.json({
+      message: 'Success update data',
+      user: userProfile,
+    });
+  } catch (error) {
+    res.json({
+      status: false,
+      message: error.sqlMessage,
+    });
+  }
 };
 
 const food = async (req, res) => {
   const foods = await dbQuery.getFood();
-  for (let i = 0; i < foods.length; i++) {
-    const element = array[i];
+  // for (let i = 0; i < foods.length; i++) {
+  //   const element = array[i];
+  // }
+  if (!foods) {
   }
   res.json({
     status: true,
@@ -72,13 +81,13 @@ const getFoodById = async (req, res) => {
 };
 
 const getFoodByName = async (req, res) => {
-  const name = await dbQuery.getFoodByName();
+  const food = await dbQuery.getFood();
 
-  const parseName = JSON.parse(JSON.stringify(name));
+  const parseName = JSON.parse(JSON.stringify(food));
   const foodName = [];
   for (let i = 0; i < parseName.length; i++) {
-    parseName[i].food_name = parseName[i].food_name.replace('\r', '');
-    if (parseName[i].food_name.includes(req.params.name)) {
+    // parseName[i].food_name = parseName[i].food_name.replace('\r', '');
+    if (parseName[i].food_name.includes(req.body.food_name)) {
       foodName.push(parseName[i]);
     }
   }

@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 const authenticationRoute = require('./routes/authenticationRoutes');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/userRoutes');
+const {
+  food,
+  getFoodById,
+  getFoodByName,
+} = require('./controller/userControler');
 
 const app = express();
 
@@ -22,6 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   })
 // );
 
+app.get('/home', food);
+app.get('/food/detail/:id', getFoodById);
+app.get('/food/:name', getFoodByName);
 app.use('/', authenticationRoute);
 app.use('/', userRoutes);
 

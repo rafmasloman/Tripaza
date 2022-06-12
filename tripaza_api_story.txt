@@ -1,0 +1,130 @@
+Profile
+* URL
+    - /user 
+* Method
+    - POST
+* Request Body
+    - token as Id 
+        catatan : Id dibuat menjadi token dari jsonwebtoken
+* Response
+    {
+        "status": true,
+        "data": {
+            id: 1,
+            "full_name": "User 01",
+            "email": "user01@gmail.com",
+            "birthday": "1998-12-01",
+            "phone_number": "087124511" 
+        }
+    }
+
+Edit Profile
+* URL
+    - /user/edit
+* Method
+    - PUT
+* Request Body
+    - token as Id
+        catatan : Id dibuat menjadi token dari jsonwebtoken
+	- full_name as string
+	- birth_date as string
+	- phone_number as string
+	- email as string
+	- password as string
+* Response
+    {
+        message: "Succes Update Data"
+    }
+    
+Home
+* URL  
+    - /
+* Method
+    - POST
+* Response 
+    {
+        "status": true,
+        "foods": [
+        {
+            "id": 1,
+            "restaurant_name": "Ayam Betutu Khas Gilimanuk",
+            "restaurant_address": "Jl. Merdeka No.88 No.5, Sumerta Kelod, Kec. Denpasar Tim., Kota Denpasar, Bali ",
+            "food_name": "Ayam Betutu",
+            "longitude": 115.23839,
+            "latitude": -8.666546,
+            "image_url": "https://storage.googleapis.com/tripaza_bucket/ayam_betutu.jpeg",
+            "rating": 4
+        },
+        {
+            "id": 2,
+            "restaurant_name": "Ayam Betutu Men Tempeh",
+            "restaurant_address": "Jl. Rajawali, Gilimanuk, Kec. Melaya, Kabupaten Jembrana, Bali",
+            "food_name": "Ayam Betutu",
+            "longitude": 114.436121,
+            "latitude": -8.168164,
+            "image_url": "https://storage.googleapis.com/tripaza_bucket/ayam_betutu.jpeg",
+            "rating": 3
+        },
+        .....
+        ]
+    }
+
+Food By Name 
+* URL
+    - /food/name
+* Method
+    - POST
+* Request Body
+    - full_name as string
+* Response
+    {
+        "status": true,
+        "foodName": [
+        {
+            "id": 1,
+            "restaurant_name": "Ayam Betutu Khas Gilimanuk",
+            "restaurant_address": "Jl. Merdeka No.88 No.5, Sumerta Kelod, Kec. Denpasar Tim., Kota Denpasar, Bali ",
+            "food_name": "Ayam Betutu",
+            "longitude": 115.23839,
+            "latitude": -8.666546,
+            "image_url": "https://storage.googleapis.com/tripaza_bucket/ayam_betutu.jpeg",
+            "rating": 4
+        },
+        {
+            "id": 2,
+            "restaurant_name": "Ayam Betutu Men Tempeh",
+            "restaurant_address": "Jl. Rajawali, Gilimanuk, Kec. Melaya, Kabupaten Jembrana, Bali",
+            "food_name": "Ayam Betutu",
+            "longitude": 114.436121,
+            "latitude": -8.168164,
+            "image_url": "https://storage.googleapis.com/tripaza_bucket/ayam_betutu.jpeg",
+            "rating": 3
+        },
+        ............
+        ]
+    }
+
+Food Detail By Id
+* URL
+    -/food/:id
+* Method
+    - POST
+* Request Params
+    - id as integer
+* Response
+    {
+        "status": true,
+        "message": "success",
+        "food": [
+            {
+            	"id": 1,
+            	"restaurant_name": "Ayam Betutu Khas Gilimanuk",
+            	"restaurant_address": "Jl. Merdeka No.88 No.5, Sumerta Kelod, Kec. Denpasar Tim., Kota Denpasar, Bali ",
+            	"food_name": "Ayam Betutu",
+            	"longitude": 115.23839,
+            	"latitude": -8.666546,
+            	"image_url": "https://storage.googleapis.com/tripaza_bucket/ayam_betutu.jpeg",
+            	"rating": 4
+        	}
+        ]
+    }

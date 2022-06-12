@@ -14,6 +14,17 @@ CREATE TABLE foods (
     food_name VARCHAR(50)
 ) 
 
+CREATE TABLE restaurant (
+    id INT PRIMARY KEY,
+    restaurant_name VARCHAR(50), 
+    restaurant_address VARCHAR(200),
+    food_name VARCHAR(50),
+    longitude DOUBLE(10,6),
+    latitude DOUBLE(10,6),
+    image_url VARCHAR(200),
+    rating INT(1)
+)
+
 CREATE TABLE ratings ( 
     rating decimal(5.0) DEFAULT 0.0, 
     foodId int NOT NULL, 
