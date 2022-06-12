@@ -74,47 +74,29 @@ const registerValidation = [
 ];
 
 const register = async (req, res) => {
-  try {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { full_name, birth_date, phone_number, email, password } = req.body;
-
-    const id = uuid.v1();
-    const salt = 10;
-    const hashPassword = bcrypt.hashSync(password, salt);
-    const user = await dbQuery.insertUser(
-      full_name,
-      birth_date,
-      phone_number,
-      email,
-      hashPassword
-    );
-
-    res.json({
-      status: 'success',
-      message: 'register success',
-    });
-  } catch (error) {
-    res.json({
-      status: 'false',
-      message: error.sqlMessage,
-    });
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
   }
-  // .then((data) =>
-  //   res.json({
-  //     message: 'register succes',
-  //   })
-  // )
-  // .catch((err) => {
-  //   res.json({
-  //     message: err,
-  //   });
-  // });
-  // req.session.userId = user.id;
+
+  const { full_name, birth_date, phone_number, email, password } = req.body;
+
+  const id = uuid.v1();
+  const salt = 10;
+  const hashPassword = bcrypt.hashSync(password, salt);
+  const user = await dbQuery.insertUser(
+    full_name,
+    birth_date,
+    phone_number,
+    email,
+    hashPassword
+  );
+
+  res.json({
+    status: 'success',
+    message: 'register success',
+  });
 };
 
 module.exports = { login, register, logout, registerValidation, bcrypt, jwt };

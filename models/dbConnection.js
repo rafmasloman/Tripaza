@@ -81,7 +81,7 @@ dbQuery.insertUser = (full_name, birth_date, phone_number, email, password) => {
 dbQuery.getFood = () => {
   return new Promise((resolve, reject) => {
     db.query(
-      'SELECT id, restaurant_name, restaurant_address, food_name,longitude, latitude, image_url,rating FROM foods',
+      'SELECT id, restaurant_name, restaurant_address, food_name,longitude, latitude, image_url,rating FROM food',
       (error, result) => {
         if (error) {
           return reject(error);
@@ -95,7 +95,7 @@ dbQuery.getFood = () => {
 dbQuery.getFoodById = (foodId) => {
   return new Promise((resolve, reject) => {
     db.query(
-      'SELECT id, restaurant_name, restaurant_address, food_name,longitude, latitude, image_url,rating FROM foods WHERE id=?',
+      'SELECT id, restaurant_name, restaurant_address, food_name,longitude, latitude, image_url,rating FROM food WHERE id=?',
       [foodId],
       (error, result) => {
         if (error) {
